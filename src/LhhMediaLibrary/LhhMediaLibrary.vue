@@ -134,6 +134,12 @@ function fileToBlob(file) {
 
 function createFile({ blob, name, mime }) {}
 
+const __DEFAULT_FOLDER = {
+  name: 'All files',
+  type: 'folder',
+  children: [],
+};
+
 export default {
   components: { File, BreadCrumb, Folder },
   props: {
@@ -161,33 +167,59 @@ export default {
       type: Function,
       default: () => () => console.log('No backendDelete method implemented !'),
     },
+    items: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
+    const rootFolder = {
+      ...__DEFAULT_FOLDER,
+      children: this.items,
+    };
     return {
       isDragOver: false,
-      //files: [].concat(this.existingFiles),
-      rootFolder: null,
-      currentOpenedFolder: null,
-      //shownFolders: [],
-      //shownFiles: [],
+      rootFolder: rootFolder,
+      currentOpenedFolder: rootFolder,
     };
+  },
+  watch: {
+    // when "items" props change, we update the internal structure
+    items(freshItems) {
+      this.rootFolder = {
+        ...__DEFAULT_FOLDER,
+        children: freshItems,
+      };
+      this.currentOpenedFolder = this.rootFolder;
+    },
   },
   mounted() {
     //showItems(this.files)
   },
   computed: {
+    /*
+    rootFolder() {
+      return {
+        name: 'My files',
+        type: 'folder',
+        children: this.items,
+      };
+    },
+    currentOpenedFolder() {
+      return this.rootFolder;
+    },*/
     shownFolders() {
-      if (!this.currentOpenedFolder) {
-        return [];
-      }
+      //if (!this.currentOpenedFolder) {
+      //  return [];
+      //}
       return this.currentOpenedFolder.children.filter(
         (i) => i.type === 'folder'
       );
     },
     shownFiles() {
-      if (!this.currentOpenedFolder) {
-        return [];
-      }
+      //if (!this.currentOpenedFolder) {
+      //  return [];
+      //}
       return this.currentOpenedFolder.children.filter((i) => i.type === 'file');
     },
     areFilesUploading() {
@@ -213,9 +245,9 @@ export default {
       //const target = event.currentTarget;
       this.isDragOver = false;
     },
-    setRootFolder(folder) {
-      this.rootFolder = folder;
-    },
+    //setRootFolder(folder) {
+    //  this.rootFolder = folder;
+    //},
     openFolder(folder) {
       this.currentOpenedFolder = folder;
       //this.shownFolders = this.currentOpenedFolder.children.filter((i) => i.type === 'folder');

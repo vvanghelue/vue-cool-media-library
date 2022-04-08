@@ -11,47 +11,17 @@
       :backendCreate="backendCreateLogic"
       :backendUpdateLogic="backendUpdateLogic"
       @files-selected="(files) => (demo1SelectedFiles = files)"
+      :items="exampleItems"
     />
   </div>
   <br />
   <button>select {{ demo1SelectedFiles.length }} items</button>
-
-  <div style="height: 70px"></div>
-
-  <h1>Example for alexandre</h1>
-  <Button
-    label="Select medias"
-    icon="pi pi-external-link"
-    @click="openModal1 = true"
-  />
-  <Dialog
-    header="Select medias"
-    v-model:visible="openModal1"
-    :style="{ minWidth: '50vw', maxWidth: '80vw' }"
-  >
-    <LhhMediaLibrary
-      ref="mediatekExample2"
-      :displayAddButton="true"
-      :onFileSelected="(files) => (demo2SelectedFiles = files)"
-    />
-    <div style="height: 30px"></div>
-    <template #footer>
-      <Button
-        :label="`Select ${demo2SelectedFiles.length} medias`"
-        icon="pi pi-external-link"
-        @click="openModal1 = true"
-      />
-    </template>
-  </Dialog>
 </template>
 
 <script>
 import LhhMediaLibrary from './LhhMediaLibrary/LhhMediaLibrary.vue';
 import lhhMultipartFileUploader from './LhhMediaLibrary/file-uploader';
 import generateFakeInputData from './generate-fake-input-data';
-
-import Dialog from 'primevue/dialog';
-import Button from 'primevue/button';
 
 function backendCreateLogic({ file, onProgress, onResponse }) {
   lhhMultipartFileUploader({
@@ -118,8 +88,6 @@ function backendUpdateLogic({
 export default {
   components: {
     LhhMediaLibrary,
-    Dialog,
-    Button,
   },
   data() {
     return {
@@ -129,6 +97,7 @@ export default {
       demo2SelectedFiles: [],
       openModal1: false,
       exampleExistingFiles: [],
+      exampleItems: [],
     };
   },
   async mounted() {
@@ -150,14 +119,15 @@ export default {
       };
     });
     */
-    const folder = {
-      isRootFolder: true,
-      type: 'folder',
-      name: 'My files',
-      children: generateFakeInputData(),
-    };
-    this.$refs.mediatekExample1.setRootFolder(folder);
-    this.$refs.mediatekExample1.openFolder(folder);
+
+    // const folder = {
+    //   type: 'folder',
+    //   name: 'My files',
+    //   children: generateFakeInputData(),
+    // };
+    this.exampleItems = generateFakeInputData();
+    //this.$refs.mediatekExample1.setRootFolder(folder);
+    //this.$refs.mediatekExample1.openFolder(folder);
   },
   methods: {
     testButton1Click(newFiles) {
