@@ -20,7 +20,7 @@
         <div class="lhh-media-library-top-left-buttons">
           <div class="top-left-button add-file-button">
             <div class="top-left-button-add-icon"></div>
-            Add file lol
+            Add file
           </div>
           <div class="top-left-button add-folder-button" @click="addNewFolder">
             <div class="top-left-button-add-icon"></div>
@@ -349,6 +349,7 @@ export default {
   transition: 0.3s ease;
   __cursor: pointer;
   padding: 5px;
+  position: relative;
 }
 .lhh-media-library * {
   box-sizing: border-box;
@@ -374,7 +375,7 @@ export default {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  min-height: 100px;
+  min-height: 200px;
 }
 .lhh-media-library--empty .lhh-media-library-content {
   justify-content: center;
@@ -460,4 +461,30 @@ export default {
   box-sizing: border-box;
 }
 /* <-- LOADER */
+
+.lhh-media-library-modal-container {
+  background: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+.lhh-media-library-modal {
+  background: white;
+  border-radius: 7px;
+  min-width: 200px;
+  min-height: 100px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+}
+.lhh-media-library-modal-title {
+}
+.lhh-media-library-modal-content {
+}
+.lhh-media-library-modal-close-icon {
+}
 </style>

@@ -3,12 +3,13 @@
     :class="['folder', { 'folder--animate-open': animateOpenFolder }]"
     @click="handleFolderClick"
   >
-    <div class="folder-icon"></div>
-
+    <div
+      class="folder-delete-icon"
+      @click="deleteFolderModalOpened = true"
+      src="./assets/close-icon.svg"
+    ></div>
     <IconFolder />
-
     <div class="folder-items-count">{{ getItemsCountRecursive }} items</div>
-
     <div
       class="folder-name"
       contenteditable
@@ -18,6 +19,18 @@
       spellcheck="false"
     >
       {{ folder.name }}
+    </div>
+  </div>
+  <div v-if="deleteFolderModalOpened" class="lhh-media-library-modal-container">
+    <div class="lhh-media-library-modal">
+      <div
+        class="lhh-media-library-modal-close-icon"
+        @click="deleteFolderModalOpened = false"
+      >
+        close
+      </div>
+      <div class="lhh-media-library-modal-title">title</div>
+      <div class="lhh-media-library-modal-content">content</div>
     </div>
   </div>
 </template>
@@ -31,11 +44,15 @@ export default {
   data() {
     return {
       animateOpenFolder: false,
+      deleteFolderModalOpened: false,
     };
   },
   methods: {
     async handleFolderClick(event) {
       if (event.target.classList.contains('folder-name')) {
+        return;
+      }
+      if (event.target.classList.contains('folder-delete-icon')) {
         return;
       }
       this.animateOpenFolder = true;
@@ -62,7 +79,7 @@ export default {
       function crawlFolder(parentFolder) {
         totalItems += parentFolder.children.length;
         const subFolders = parentFolder.children.filter(
-          (i) => i.type === 'folder',
+          (i) => i.type === 'folder'
         );
         for (const childFolder of subFolders) {
           crawlFolder(childFolder);
@@ -102,5 +119,25 @@ export default {
 }
 .folder-name:focus {
   font-weight: bold;
+}
+
+.folder-delete-icon {
+  background: url(./assets/close-icon.svg);
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: -1px;
+  top: 8px;
+  opacity: 0;
+  transition: 0.2s ease;
+  transform: scale(0.8);
+}
+.folder:hover .folder-delete-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+.folder-delete-icon:hover {
+  transform: scale(1.4) !important;
+  cursor: pointer;
 }
 </style>

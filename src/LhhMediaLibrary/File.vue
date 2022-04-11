@@ -235,7 +235,7 @@ export default {
   background-image: url(./assets/close-icon.svg);
   background-position: center center;
   background-size: cover;
-  background-size: 30px 30px;
+  background-size: 24px 24px;
   background-repeat: no-repeat;
   transform: scale(0.8);
 }
@@ -243,6 +243,11 @@ export default {
   opacity: 1;
   transform: scale(1);
 }
+.file-close-icon:hover {
+  transform: scale(1.4) !important;
+  cursor: pointer;
+}
+
 .file--selected .file-block,
 .file--selected:hover .file-block {
   box-shadow: 0 0 0 3px rgb(var(--lhh-media-library-color-2));
