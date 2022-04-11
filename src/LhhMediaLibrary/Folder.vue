@@ -50,6 +50,7 @@ import IconFolder from './assets/IconFolder.vue';
 export default {
   props: ['folder'],
   components: { IconFolder },
+  emits: ['open-folder', 'delete-folder'],
   data() {
     return {
       animateOpenFolder: false,

@@ -1,16 +1,19 @@
 <template>
-  <div class="cropping-modal-container" v-if="isOpen">
-    <div class="cropping-modal">
-      <div class="cropping-modal-header">
-        <div class="cropping-modal-title">Edit Image</div>
-        <div class="cropping-modal-close-icon" @click="isOpen = false"></div>
+  <div v-if="isOpen" class="lhh-media-library-modal-container">
+    <div class="lhh-media-library-modal">
+      <div
+        class="lhh-media-library-modal-close-icon"
+        @click="isOpen = false"
+      ></div>
+      <div class="lhh-media-library-modal-title">Crop image</div>
+      <div class="lhh-media-library-modal-content">
+        <div class="cropping-container">
+          <div v-if="isLoading" class="lhh-media-library-loader"></div>
+          <img :src="imageDataURI" ref="imageToEdit" />
+        </div>
       </div>
-      <div class="cropping-container">
-        <div v-if="isLoading" class="lhh-media-library-loader"></div>
-        <img :src="imageDataURI" ref="imageToEdit" />
-      </div>
-      <div style="padding: 10px 0; text-align: right">
-        <button @click="exportCrop">Ok</button>
+      <div class="lhh-media-library-modal-bottom" style="text-align: right">
+        <button class="lhh-media-library-button" @click="exportCrop">OK</button>
       </div>
     </div>
   </div>
@@ -90,7 +93,6 @@ export default {
       });
       this.isOpen = false;
       this.$emit('edit-image', {
-        file: this.currentEditedFile,
         newBlob: blob,
       });
     },
@@ -99,48 +101,6 @@ export default {
 </script>
 
 <style scoped>
-.cropping-modal-container {
-  position: fixed;
-  z-index: 99;
-  left: 0;
-  top: 0;
-  __width: 100vw;
-  __height: 100vh;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.cropping-modal {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  __max-width: 800px;
-  min-height: 300px;
-  min-width: 400px;
-  padding: 15px;
-}
-.cropping-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 10px;
-}
-.cropping-modal-title {
-  font-size: 23px;
-  font-weight: bold;
-}
-.cropping-modal-close-icon {
-  width: 40px;
-  height: 40px;
-  background-size: 24px 24px;
-  cursor: pointer;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-image: url('../assets/close-icon-modal.svg');
-}
 .cropping-container {
   min-height: 200px;
   display: flex;
@@ -150,6 +110,6 @@ export default {
 .cropping-container img {
   min-width: 50vw;
   max-width: 70vw;
-  max-height: 80vh;
+  max-height: 60vh;
 }
 </style>

@@ -70,7 +70,6 @@
           :backendCreate="backendCreate"
           @delete-file="onDeleteFile"
           @select-file="onSelectFile"
-          @edit-image="onEditImage"
         />
       </div>
 
@@ -335,12 +334,6 @@ export default {
         'files-selected',
         this.getAllFilesRecursively().filter((i) => i.selected === true)
       );
-    },
-    async onEditImage({ file, newBlob }) {
-      console.log('onEditImage', file, newBlob);
-      // console.log('onEditImage', file, newBlob);
-      // file.imagePreview = await getImageDataURI(newBlob);
-      // file.blob = newBlob;
     },
     addNewFolder() {
       this.currentOpenedFolder.children.push({

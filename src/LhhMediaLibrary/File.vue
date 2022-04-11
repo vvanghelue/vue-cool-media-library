@@ -30,7 +30,7 @@
           {{ Number(Math.round(file.sizeBytes / 1000)).toLocaleString() }}
           kb
         </div>
-        <div class="file-actions" v-if="!!file.url">
+        <div class="file-actions" v-if="!!file.url && file.uploading === false">
           <div
             v-if="isImage"
             class="file-actions-button crop-action-button"
@@ -55,10 +55,7 @@
       {{ file.name }}
     </div>
   </div>
-  <CroppingModal
-    ref="croppingModal"
-    @edit-image="(params) => $emit('edit-image', params)"
-  />
+  <CroppingModal ref="croppingModal" @edit-image="onImageCropped" />
 </template>
 
 <script>
@@ -68,6 +65,11 @@ import IconChecked from './assets/IconChecked.vue';
 export default {
   components: { CroppingModal, IconChecked },
   props: ['file', 'backendCreate'],
+  emits: ['delete-file', 'select-file'],
+  created() {
+    this.file.uploading = false;
+    this.file.uploadingProgress = 0;
+  },
   data() {
     return {
       isDeleting: false,
@@ -147,6 +149,11 @@ export default {
         event.target.innerHTML = event.target.innerText.trim();
         event.target.blur();
       }
+    },
+    onImageCropped({ newBlob }) {
+      this.file.imagePreview = URL.createObjectURL(newBlob);
+      this.file.uploading = true;
+      this.file.uploadingProgress = 30;
     },
   },
 };
