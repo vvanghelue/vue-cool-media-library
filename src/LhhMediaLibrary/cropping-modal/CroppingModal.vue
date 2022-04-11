@@ -21,6 +21,7 @@ import 'cropperjs/dist/cropper.css';
 import Cropper from 'cropperjs';
 import loadRemoteImage from '../_lib/load-remote-image';
 
+/*
 function loadImageDataFromFile(file) {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -30,6 +31,7 @@ function loadImageDataFromFile(file) {
     reader.readAsDataURL(file);
   });
 }
+*/
 
 export default {
   props: [],
@@ -48,13 +50,13 @@ export default {
       console.log('Cropper : open file', file);
       this.isOpen = true;
       this.isLoading = true;
-      //wait new Promise((r) => setTimeout(r, 4000));
-      //this.isLoading = false;
-      //return;
-      //this.imageDataURI = await loadImageDataFromFile(file.blob);
-      //await new Promise((r) => setTimeout(r, 1000));
+      // wait new Promise((r) => setTimeout(r, 4000));
+      // this.isLoading = false;
+      // return;
+      // this.imageDataURI = await loadImageDataFromFile(file.blob);
+      // await new Promise((r) => setTimeout(r, 1000));
 
-      //this.imageDataURI = URL.createObjectURL(await loadRemoteImage(file.url));
+      // this.imageDataURI = URL.createObjectURL(await loadRemoteImage(file.url));
 
       const remoteImage = URL.createObjectURL(await loadRemoteImage(file.url));
       this.imageDataURI = remoteImage;
@@ -70,8 +72,8 @@ export default {
       this.isLoading = false;
       this.cropperInstance = new Cropper(image, {
         checkCrossOrigin: false,
-        //aspectRatio: 16 / 9,
-        //crop(event) {
+        // aspectRatio: 16 / 9,
+        // crop(event) {
         //  console.log(event.detail.x);
         //  console.log(event.detail.y);
         //  console.log(event.detail.width);
@@ -79,7 +81,7 @@ export default {
         //  console.log(event.detail.rotate);
         //  console.log(event.detail.scaleX);
         //  console.log(event.detail.scaleY);
-        //},
+        // },
       });
     },
     async exportCrop() {

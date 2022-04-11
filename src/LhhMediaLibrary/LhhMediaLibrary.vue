@@ -87,7 +87,7 @@
 </template>
 
 <script>
-//https://fengyuanchen.github.io/cropperjs/
+// https://fengyuanchen.github.io/cropperjs/
 import File from './File.vue';
 import Folder from './Folder.vue';
 import BreadCrumb from './BreadCrumb.vue';
@@ -109,7 +109,7 @@ function getImageDataURI(blob) {
 function fileToBlob(file) {
   return new Promise((resolve) => {
     const reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = (e) => {
       const blob = new Blob([new Uint8Array(e.target.result)], {
         type: file.mimeType,
       });
@@ -119,22 +119,22 @@ function fileToBlob(file) {
   });
 }
 
-//const mapMimeExtension = {
+// const mapMimeExtension = {
 //  'image/jpeg': 'jpg',
 //  'image/jpg': 'jpg',
 //  'image/png': 'png',
 //  'image/svg+xml': 'svg',
 //  'application/pdf': 'pdf',
 //  'application/vnd.openxml': 'docx',
-//};
+// };
 
 // function getFileExtension(name) {
 //   return name.split('.')[name.split('.').length - 1];
 // }
 
-function createFile({ blob, name, mime }) {}
+// function createFile({ blob, name, mime }) {}
 
-const __DEFAULT_FOLDER = {
+const DEFAULT_FOLDER = {
   name: 'All files',
   type: 'folder',
   children: [],
@@ -174,12 +174,12 @@ export default {
   },
   data() {
     const rootFolder = {
-      ...__DEFAULT_FOLDER,
+      ...DEFAULT_FOLDER,
       children: this.items,
     };
     return {
       isDragOver: false,
-      rootFolder: rootFolder,
+      rootFolder,
       currentOpenedFolder: rootFolder,
     };
   },
@@ -187,14 +187,14 @@ export default {
     // when "items" props change, we update the internal structure
     items(freshItems) {
       this.rootFolder = {
-        ...__DEFAULT_FOLDER,
+        ...DEFAULT_FOLDER,
         children: freshItems,
       };
       this.currentOpenedFolder = this.rootFolder;
     },
   },
   mounted() {
-    //showItems(this.files)
+    // showItems(this.files)
   },
   computed: {
     /*
@@ -207,19 +207,19 @@ export default {
     },
     currentOpenedFolder() {
       return this.rootFolder;
-    },*/
+    }, */
     shownFolders() {
-      //if (!this.currentOpenedFolder) {
+      // if (!this.currentOpenedFolder) {
       //  return [];
-      //}
+      // }
       return this.currentOpenedFolder.children.filter(
-        (i) => i.type === 'folder'
+        (i) => i.type === 'folder',
       );
     },
     shownFiles() {
-      //if (!this.currentOpenedFolder) {
+      // if (!this.currentOpenedFolder) {
       //  return [];
-      //}
+      // }
       return this.currentOpenedFolder.children.filter((i) => i.type === 'file');
     },
     areFilesUploading() {
@@ -236,35 +236,24 @@ export default {
       e.preventDefault();
       this.isDragOver = true;
     },
-    onDragLeave(e) {
+    onDragLeave() {
       this.isDragOver = false;
     },
     handleDrop(event) {
       event.preventDefault();
       this.addFiles(event.dataTransfer.files);
-      //const target = event.currentTarget;
+      // const target = event.currentTarget;
       this.isDragOver = false;
     },
-    //setRootFolder(folder) {
-    //  this.rootFolder = folder;
-    //},
     openFolder(folder) {
       this.currentOpenedFolder = folder;
-      //this.shownFolders = this.currentOpenedFolder.children.filter((i) => i.type === 'folder');
-      //this.shownFiles = this.currentOpenedFolder.children.filter((i) => i.type === 'file');
-      //this.$refs.breadCrumb.updatePath();
-      return;
-      this.files = [];
-      for (const file of files) {
-        console.log(file);
-      }
     },
     async addFiles(files) {
       for (const rawFile of files) {
         console.log('adding file', rawFile);
         const blob = await fileToBlob(rawFile);
 
-        let file = {
+        const file = {
           type: 'file',
           blob,
           name: rawFile.name.split('.').slice(0, -1).join('.'),
@@ -287,19 +276,19 @@ export default {
     },
     onDeleteFile(file) {
       console.log('onDeleteFile', file);
-      //this.items = this.items.filter((i) => i !== file);
+      // this.items = this.items.filter((i) => i !== file);
       function searchInFolder(parentFolder) {
         const fildFoundInChildren = !!parentFolder.children.find(
-          (i) => i === file
+          (i) => i === file,
         );
         if (fildFoundInChildren) {
           parentFolder.children = parentFolder.children.filter(
-            (i) => i !== file
+            (i) => i !== file,
           );
           return;
         }
         for (const childFolder of parentFolder.children.filter(
-          (i) => i.type === 'folder'
+          (i) => i.type === 'folder',
         )) {
           searchInFolder(childFolder);
         }
@@ -312,21 +301,22 @@ export default {
     },
     onSelectFile(file) {
       if (!this.canSelectMultiple) {
-        for (const file of this.getAllFilesRecursively()) {
-          file.selected = false;
+        for (const childFile of this.getAllFilesRecursively()) {
+          childFile.selected = false;
         }
       }
       file.selected = !file.selected;
-      //this.onFileSelected(alreadySelectedItems);
+      // this.onFileSelected(alreadySelectedItems);
       this.$emit(
         'files-selected',
-        this.getAllFilesRecursively().filter((i) => i.selected === true)
+        this.getAllFilesRecursively().filter((i) => i.selected === true),
       );
     },
     async onEditImage({ file, newBlob }) {
       console.log('onEditImage', file, newBlob);
-      file.imagePreview = await getImageDataURI(newBlob);
-      file.blob = newBlob;
+      // console.log('onEditImage', file, newBlob);
+      // file.imagePreview = await getImageDataURI(newBlob);
+      // file.blob = newBlob;
     },
     addNewFolder() {
       this.currentOpenedFolder.children.push({
@@ -340,7 +330,7 @@ export default {
       function crawlFolder(parentFolder) {
         files.push(...parentFolder.children.filter((i) => i.type === 'file'));
         for (const childFolder of parentFolder.children.filter(
-          (i) => i.type === 'folder'
+          (i) => i.type === 'folder',
         )) {
           crawlFolder(childFolder);
         }

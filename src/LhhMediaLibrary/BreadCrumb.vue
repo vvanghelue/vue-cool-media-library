@@ -16,7 +16,7 @@ export default {
   props: ['rootFolder', 'currentOpenedFolder', 'onOpenFolder'],
   data() {
     return {
-      //path: [],
+      // path: [],
     };
   },
   computed: {
@@ -31,7 +31,7 @@ export default {
       */
 
       if (!this.currentOpenedFolder || !this.rootFolder) {
-        return;
+        return [];
       }
 
       // naive path search

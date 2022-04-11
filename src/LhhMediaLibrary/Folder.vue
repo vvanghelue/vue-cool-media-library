@@ -62,7 +62,7 @@ export default {
       function crawlFolder(parentFolder) {
         totalItems += parentFolder.children.length;
         const subFolders = parentFolder.children.filter(
-          (i) => i.type === 'folder'
+          (i) => i.type === 'folder',
         );
         for (const childFolder of subFolders) {
           crawlFolder(childFolder);

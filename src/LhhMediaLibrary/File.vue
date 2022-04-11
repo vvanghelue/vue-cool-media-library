@@ -119,7 +119,7 @@ export default {
   },
   methods: {
     async handleDeleteFile() {
-      //await new Promise((r) => setTimeout(r, 300));
+      // await new Promise((r) => setTimeout(r, 300));
       this.isDeleting = true;
       await new Promise((r) => setTimeout(r, 300));
       this.$emit('delete-file', this.file);

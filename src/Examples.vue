@@ -31,7 +31,7 @@ function backendCreateLogic({ file, onProgress, onResponse }) {
       file: file.blob,
       file_name: file.name,
     },
-    //multipartFormMimeTypeName: 'mime-type',
+    // multipartFormMimeTypeName: 'mime-type',
     onUploadProgress: (percentProgress) => {
       onProgress(percentProgress);
     },
@@ -66,7 +66,7 @@ function backendUpdateLogic({
     multipartFormFileKey: 'file',
     multipartFormNameKey: 'file_name',
     multipartFormFileExtensionKey: 'file_extension',
-    //multipartFormMimeTypeName: 'mime-type',
+    // multipartFormMimeTypeName: 'mime-type',
     onUploadProgress: (percentProgress) => {
       onProgress(percentProgress);
     },
@@ -126,12 +126,12 @@ export default {
     //   children: generateFakeInputData(),
     // };
     this.exampleItems = generateFakeInputData();
-    //this.$refs.mediatekExample1.setRootFolder(folder);
-    //this.$refs.mediatekExample1.openFolder(folder);
+    // this.$refs.mediatekExample1.setRootFolder(folder);
+    // this.$refs.mediatekExample1.openFolder(folder);
   },
   methods: {
     testButton1Click(newFiles) {
-      console.log('new files aded !', this.$refs.mediatekExample1.getFiles());
+      console.log('new files aded !', newFiles);
     },
   },
 };

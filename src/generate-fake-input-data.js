@@ -1,3 +1,4 @@
+/* eslint-disable */
 function pickRandomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
@@ -20,14 +21,14 @@ function generateFile() {
   return {
     type: 'file',
     id: Math.floor(Math.random() * Math.pow(10, 10)),
-    name: 'My super file ' + pickRandomItem([...Array(999).keys()]),
+    name: `My super file ${pickRandomItem([...Array(999).keys()])}`,
     url,
     mimeType,
-    /*name: pickRandomItem([
+    /* name: pickRandomItem([
       'Header CASP.jpg',
       'Header CASP Demo (1).jpg',
       'Footer CASP.jpg',
-    ]),*/
+    ]), */
     sizeBytes: Math.round(Math.random() * 200000),
   };
 }
@@ -35,7 +36,7 @@ function generateFolder({ name, children = [] }) {
   return {
     type: 'folder',
     id: Math.floor(Math.random() * Math.pow(10, 10)),
-    name: name || 'My Parent Folder ' + pickRandomItem([...Array(999).keys()]),
+    name: name || `My Parent Folder ${pickRandomItem([...Array(999).keys()])}`,
     children,
   };
 }
@@ -81,7 +82,7 @@ generateFakeFileTree({
 });
 
 export default function () {
-  let fakeItemsNested = [
+  const fakeItemsNested = [
     generateFolder({ children: [generateFile(), generateFile()] }),
     generateFolder({ children: [generateFile()] }),
     nestedFolder,
@@ -91,8 +92,8 @@ export default function () {
     generateFile(),
     generateFile(),
   ];
-  //const fakeFiles = flattenTree(fakeFilesNested);
+  // const fakeFiles = flattenTree(fakeFilesNested);
   const fakeItems = fakeItemsNested;
-  //console.log(fakeFiles);
+  // console.log(fakeFiles);
   return fakeItems;
 }
