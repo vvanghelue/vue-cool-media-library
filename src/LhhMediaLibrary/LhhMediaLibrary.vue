@@ -18,7 +18,10 @@
     <div class="lhh-media-library-top">
       <div class="lhh-media-library-top-left">
         <div class="lhh-media-library-top-left-buttons">
-          <div class="top-left-button add-file-button">
+          <div
+            class="top-left-button add-file-button"
+            @click="$refs.newFileInputElement.click()"
+          >
             <div class="top-left-button-add-icon"></div>
             Add file
           </div>
@@ -84,6 +87,12 @@
       </div>
     </div>
   </div>
+  <input
+    class="lhh-media-library-input-file"
+    type="file"
+    ref="newFileInputElement"
+    :multiple="canSelectMultiple"
+  />
 </template>
 
 <script>
@@ -142,11 +151,8 @@ const DEFAULT_FOLDER = {
 
 export default {
   components: { File, BreadCrumb, Folder },
+  emits: ['files-selected'],
   props: {
-    multiple: {
-      type: Boolean,
-      default: true,
-    },
     canSelectMultiple: {
       type: Boolean,
       default: false,
@@ -370,6 +376,11 @@ export default {
 }
 .lhh-media-library * {
   box-sizing: border-box;
+}
+.lhh-media-library-input-file {
+  width: 1px;
+  height: 1px;
+  opacity: 0;
 }
 .lhh-media-library:hover {
   border-color: rgba(var(--lhh-media-library-color-1), 0.08);
