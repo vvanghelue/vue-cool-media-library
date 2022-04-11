@@ -53,8 +53,9 @@
       <!-- display folders and files -->
       <div
         class="lhh-media-library-content-item"
-        v-for="folder of shownFolders"
+        v-for="(folder, key, index) of shownFolders"
         :key="folder"
+        ref="foldersRefs"
       >
         <Folder
           :folder="folder"
@@ -73,16 +74,6 @@
           :backendCreate="backendCreate"
           @delete-file="onDeleteFile"
           @select-file="onSelectFile"
-        />
-      </div>
-
-      <div class="file file--add" v-if="false">
-        <input
-          ref="inputPlaceholder"
-          type="file"
-          style="width: 100%; height: 100%; opacity: 0; display: inline-block"
-          @change="onInputFile"
-          :multiple="multiple"
         />
       </div>
     </div>
@@ -251,17 +242,24 @@ export default {
       this.addFiles(event.dataTransfer.files);
       // const target = event.currentTarget;
       this.isDragOver = false;
+      this.scrollIntoContentEnd();
     },
     openFolder(folder) {
       this.currentOpenedFolder = folder;
     },
     onInputFile(event) {
       this.addFiles(event.target.files);
-      this.$refs.fileList.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-        inline: 'nearest',
-      });
+      this.scrollIntoContentEnd();
+    },
+    scrollIntoContentEnd() {
+      setTimeout(() => {
+        console.log(this.$refs.fileList);
+        this.$refs.fileList.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+          inline: 'nearest',
+        });
+      }, 500);
     },
     async addFiles(files) {
       for (const rawFile of files) {
@@ -353,6 +351,14 @@ export default {
         name: 'My new folder',
         children: [],
       });
+
+      // scroll to folder position
+      if (this.$refs.foldersRefs && this.$refs.foldersRefs.at(-1)) {
+        this.$refs.foldersRefs.at(-1).scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
     },
     getAllFilesRecursively() {
       const files = [];
