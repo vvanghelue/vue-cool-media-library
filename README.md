@@ -1,4 +1,5 @@
 # vue-rybm51
+A cool file media library component for vue@3
 
 [Edit on StackBlitz ⚡️](https://stackblitz.com/edit/vue-rybm51)
 
@@ -7,8 +8,3 @@
 npm install github:vvanghelue/vue-cool-media-library
 ```
 
-### Needed dependencies
-```
-npm install cropperjs@1.5
-npm install vue@3
-```
