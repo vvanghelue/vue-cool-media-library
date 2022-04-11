@@ -20,7 +20,7 @@
         <div class="lhh-media-library-top-left-buttons">
           <div class="top-left-button add-file-button">
             <div class="top-left-button-add-icon"></div>
-            Add file
+            Add file lol
           </div>
           <div class="top-left-button add-folder-button" @click="addNewFolder">
             <div class="top-left-button-add-icon"></div>
@@ -213,7 +213,7 @@ export default {
       //  return [];
       // }
       return this.currentOpenedFolder.children.filter(
-        (i) => i.type === 'folder',
+        (i) => i.type === 'folder'
       );
     },
     shownFiles() {
@@ -279,16 +279,16 @@ export default {
       // this.items = this.items.filter((i) => i !== file);
       function searchInFolder(parentFolder) {
         const fildFoundInChildren = !!parentFolder.children.find(
-          (i) => i === file,
+          (i) => i === file
         );
         if (fildFoundInChildren) {
           parentFolder.children = parentFolder.children.filter(
-            (i) => i !== file,
+            (i) => i !== file
           );
           return;
         }
         for (const childFolder of parentFolder.children.filter(
-          (i) => i.type === 'folder',
+          (i) => i.type === 'folder'
         )) {
           searchInFolder(childFolder);
         }
@@ -309,7 +309,7 @@ export default {
       // this.onFileSelected(alreadySelectedItems);
       this.$emit(
         'files-selected',
-        this.getAllFilesRecursively().filter((i) => i.selected === true),
+        this.getAllFilesRecursively().filter((i) => i.selected === true)
       );
     },
     async onEditImage({ file, newBlob }) {
@@ -330,7 +330,7 @@ export default {
       function crawlFolder(parentFolder) {
         files.push(...parentFolder.children.filter((i) => i.type === 'file'));
         for (const childFolder of parentFolder.children.filter(
-          (i) => i.type === 'folder',
+          (i) => i.type === 'folder'
         )) {
           crawlFolder(childFolder);
         }
