@@ -26,11 +26,20 @@
       <div
         class="lhh-media-library-modal-close-icon"
         @click="deleteFolderModalOpened = false"
-      >
-        close
+      ></div>
+      <div class="lhh-media-library-modal-title">Directory non-empty</div>
+      <div class="lhh-media-library-modal-content">
+        This repository is not empty. <br />You must empty directory before
+        deleting it.
+        <div class="lhh-media-library-modal-bottom" style="text-align: right">
+          <button
+            class="lhh-media-library-button"
+            @click="deleteFolderModalOpened = false"
+          >
+            OK
+          </button>
+        </div>
       </div>
-      <div class="lhh-media-library-modal-title">title</div>
-      <div class="lhh-media-library-modal-content">content</div>
     </div>
   </div>
 </template>
@@ -111,11 +120,12 @@ export default {
   font-weight: bold;
   font-size: 14px;
   color: rgb(var(--lhh-media-library-color-3));
+  user-select: none;
 }
 .folder-name {
   text-align: center;
   width: 140px;
-  z-index: 99;
+  z-index: 2;
 }
 .folder-name:focus {
   font-weight: bold;

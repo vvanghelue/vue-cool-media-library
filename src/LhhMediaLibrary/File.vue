@@ -229,14 +229,14 @@ export default {
   top: -20px;
   width: 40px;
   height: 40px;
-  opacity: 0;
   cursor: pointer;
-  transition: 0.1s ease;
+  transition: 0.2s ease;
   background-image: url(./assets/close-icon.svg);
   background-position: center center;
   background-size: cover;
   background-size: 24px 24px;
   background-repeat: no-repeat;
+  opacity: 0;
   transform: scale(0.8);
 }
 .file-block:hover .file-close-icon {

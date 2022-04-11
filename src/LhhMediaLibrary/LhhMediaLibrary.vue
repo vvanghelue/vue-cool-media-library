@@ -462,6 +462,7 @@ export default {
 }
 /* <-- LOADER */
 
+/* MODAL --> */
 .lhh-media-library-modal-container {
   background: rgba(0, 0, 0, 0.4);
   position: absolute;
@@ -480,11 +481,41 @@ export default {
   min-width: 200px;
   min-height: 100px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+  padding: 15px;
 }
 .lhh-media-library-modal-title {
+  font-size: 24px;
+  padding-bottom: 10px;
+  font-weight: bold;
 }
 .lhh-media-library-modal-content {
 }
-.lhh-media-library-modal-close-icon {
+.lhh-media-library-modal-bottom {
+  padding-top: 10px;
 }
+.lhh-media-library-modal-close-icon {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 40px;
+  height: 40px;
+  background: url(./assets/close-icon-modal.svg) center center no-repeat;
+}
+/* <-- MODAL */
+
+/* BUTTONS --> */
+.lhh-media-library-button {
+  border: 1px solid transparent;
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  border-radius: 99px;
+  line-height: 35px;
+  padding: 0 25px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* <-- BUTTONS */
 </style>
