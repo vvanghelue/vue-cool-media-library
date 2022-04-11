@@ -57,6 +57,7 @@
           :folder="folder"
           :onOpenFolder="openFolder"
           @open-folder="openFolder"
+          @delete-folder="onDeleteFolder"
         />
       </div>
       <div
@@ -282,6 +283,7 @@ export default {
           (i) => i === file
         );
         if (fildFoundInChildren) {
+          // we remove the file
           parentFolder.children = parentFolder.children.filter(
             (i) => i !== file
           );
@@ -294,7 +296,29 @@ export default {
         }
       }
       searchInFolder(this.rootFolder);
-      console.log('@TODO manage call to backend !!');
+      console.log('@TODO manage onDeleteFile call to backend !!');
+    },
+    onDeleteFolder(folder) {
+      console.log('onDeleteFolder', folder);
+      function searchInFolder(parentFolder) {
+        const fildFoundInChildren = !!parentFolder.children.find(
+          (i) => i === folder
+        );
+        if (fildFoundInChildren) {
+          // we remove the folder
+          parentFolder.children = parentFolder.children.filter(
+            (i) => i !== folder
+          );
+          return;
+        }
+        for (const childFolder of parentFolder.children.filter(
+          (i) => i.type === 'folder'
+        )) {
+          searchInFolder(childFolder);
+        }
+      }
+      searchInFolder(this.rootFolder);
+      console.log('@TODO manage onDeleteFolder call to backend !!');
     },
     onInputFile(event) {
       this.addFiles(event.target.files);

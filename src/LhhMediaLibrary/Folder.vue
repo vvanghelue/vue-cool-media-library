@@ -5,7 +5,7 @@
   >
     <div
       class="folder-delete-icon"
-      @click="deleteFolderModalOpened = true"
+      @click="deleteFolder"
       src="./assets/close-icon.svg"
     ></div>
     <IconFolder />
@@ -80,6 +80,13 @@ export default {
         event.target.innerHTML = event.target.innerText.trim();
         event.target.blur();
       }
+    },
+    deleteFolder() {
+      if (this.getItemsCountRecursive > 0) {
+        this.deleteFolderModalOpened = true;
+        return;
+      }
+      this.$emit('delete-folder', this.folder);
     },
   },
   computed: {
