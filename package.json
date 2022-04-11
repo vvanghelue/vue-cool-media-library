@@ -27,5 +27,6 @@
     "eslint-plugin-import": "2.x",
     "eslint-plugin-vue": "7.x",
     "prettier": "^2.6.2"
-  }
+  },
+  "main": "src/LhhMediaLibrary/LhhMediaLibrary.vue"
 }
