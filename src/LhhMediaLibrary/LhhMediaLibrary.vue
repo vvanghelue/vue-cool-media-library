@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div class="lhh-media-library-content">
+    <div class="lhh-media-library-content" ref="fileList">
       <div
         v-if="[].concat(shownFiles).concat(shownFolders).length === 0"
         class=""
@@ -92,6 +92,7 @@
     type="file"
     ref="newFileInputElement"
     :multiple="canSelectMultiple"
+    @change="onInputFile"
   />
 </template>
 
@@ -254,6 +255,14 @@ export default {
     openFolder(folder) {
       this.currentOpenedFolder = folder;
     },
+    onInputFile(event) {
+      this.addFiles(event.target.files);
+      this.$refs.fileList.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest',
+      });
+    },
     async addFiles(files) {
       for (const rawFile of files) {
         console.log('adding file', rawFile);
@@ -324,9 +333,6 @@ export default {
       }
       searchInFolder(this.rootFolder);
       console.log('@TODO manage onDeleteFolder call to backend !!');
-    },
-    onInputFile(event) {
-      this.addFiles(event.target.files);
     },
     onSelectFile(file) {
       if (!this.canSelectMultiple) {
