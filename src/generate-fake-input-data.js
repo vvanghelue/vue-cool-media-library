@@ -90,7 +90,6 @@ export default function () {
     generateFile(),
     generateFile(),
     generateFile(),
-    generateFile(),
   ];
   //const fakeFiles = flattenTree(fakeFilesNested);
   const fakeItems = fakeItemsNested;
