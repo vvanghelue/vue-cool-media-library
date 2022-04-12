@@ -17,6 +17,7 @@
       @click="handleNameClick"
       @keyup="handleNameKeyup"
       spellcheck="false"
+      ref="nameEditBox"
     >
       {{ folder.name }}
     </div>
@@ -88,6 +89,16 @@ export default {
         return;
       }
       this.$emit('delete-folder', this.folder);
+    },
+    scrollAndFocusEditName() {
+      this.$refs.nameEditBox.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+      setTimeout(() => {
+        this.$refs.nameEditBox.focus();
+        window.getSelection().selectAllChildren(this.$refs.nameEditBox);
+      }, 300);
     },
   },
   computed: {

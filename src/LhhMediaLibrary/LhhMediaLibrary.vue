@@ -53,21 +53,22 @@
       <!-- display folders and files -->
       <div
         class="lhh-media-library-content-item"
-        v-for="(folder, key, index) of shownFolders"
+        v-for="(folder, index) of shownFolders"
         :key="folder"
-        ref="foldersRefs"
       >
         <Folder
           :folder="folder"
           :onOpenFolder="openFolder"
           @open-folder="openFolder"
           @delete-folder="onDeleteFolder"
+          :ref="index === shownFolders.length - 1 ? 'folder-last' : 'none'"
         />
       </div>
       <div
         class="lhh-media-library-content-item"
         v-for="file of shownFiles"
         :key="file"
+        draggable="true"
       >
         <File
           :file="file"
@@ -249,17 +250,16 @@ export default {
     },
     onInputFile(event) {
       this.addFiles(event.target.files);
-      this.scrollIntoContentEnd();
+      setTimeout(() => {
+        this.scrollIntoContentEnd();
+      }, 500);
     },
     scrollIntoContentEnd() {
-      setTimeout(() => {
-        console.log(this.$refs.fileList);
-        this.$refs.fileList.scrollIntoView({
-          behavior: 'smooth',
-          block: 'end',
-          inline: 'nearest',
-        });
-      }, 500);
+      this.$refs.fileList.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest',
+      });
     },
     async addFiles(files) {
       for (const rawFile of files) {
@@ -353,12 +353,12 @@ export default {
       });
 
       // scroll to folder position
-      if (this.$refs.foldersRefs && this.$refs.foldersRefs.at(-1)) {
-        this.$refs.foldersRefs.at(-1).scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        });
-      }
+
+      setTimeout(() => {
+        this.$refs['folder-last'] &&
+          this.$refs['folder-last'][0] &&
+          this.$refs['folder-last'][0].scrollAndFocusEditName();
+      });
     },
     getAllFilesRecursively() {
       const files = [];

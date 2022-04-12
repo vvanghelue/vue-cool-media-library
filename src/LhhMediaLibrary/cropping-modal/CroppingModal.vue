@@ -73,6 +73,8 @@ export default {
       // });
 
       this.isLoading = false;
+
+      return;
       this.cropperInstance = new Cropper(image, {
         checkCrossOrigin: false,
         // aspectRatio: 16 / 9,
@@ -108,8 +110,6 @@ export default {
   align-items: center;
 }
 .cropping-container img {
-  min-width: 50vw;
-  max-width: 70vw;
-  max-height: 60vh;
+  max-height: 250px;
 }
 </style>
