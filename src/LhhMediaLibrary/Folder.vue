@@ -1,14 +1,22 @@
 <template>
   <div
-    :class="['folder', { 'folder--animate-open': animateOpenFolder }]"
+    :class="[
+      'folder',
+      { 'folder--animate-open': animateOpenFolder },
+      { 'folder--dragover': isDragOver },
+    ]"
     @click="handleFolderClick"
+    :droppable="true"
+    @dragover="onDragOver"
+    @dragleave="onDragLeave"
+    @drop="onDrop"
   >
     <div
       class="folder-delete-icon"
       @click="deleteFolder"
       src="./assets/close-icon.svg"
     ></div>
-    <IconFolder />
+    <IconFolder class="folder-icon" />
     <div class="folder-items-count">{{ getItemsCountRecursive }} items</div>
     <div
       class="folder-name"
@@ -56,9 +64,25 @@ export default {
     return {
       animateOpenFolder: false,
       deleteFolderModalOpened: false,
+      isDragOver: false,
     };
   },
   methods: {
+    onDragOver(event) {
+      event.preventDefault();
+      if (
+        event.dataTransfer.items[0] &&
+        event.dataTransfer.items[0].kind === 'string'
+      ) {
+        this.isDragOver = true;
+      }
+    },
+    onDragLeave() {
+      this.isDragOver = false;
+    },
+    onDrop() {
+      this.isDragOver = false;
+    },
     async handleFolderClick(event) {
       if (event.target.classList.contains('folder-name')) {
         return;
@@ -132,6 +156,10 @@ export default {
   opacity: 0;
   transform: scale(1.5);
 }
+.folder--dragover {
+  transform: scale(1.1);
+}
+
 .folder-items-count {
   position: absolute;
   top: 123px;

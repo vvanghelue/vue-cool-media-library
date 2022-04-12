@@ -2,8 +2,12 @@
   <div
     :class="[
       'file',
-      { 'file--selected': file.selected, 'file--animate-delete': isDeleting },
+      { 'file--selected': file.selected },
+      { 'file--animate-delete': isDeleting },
     ]"
+    draggable="true"
+    @dragstart="onDragStart"
+    @dragstop="onDragStop"
   >
     <div class="file-block" @click="onFileClick">
       <div class="file-close-icon" @click="handleDeleteFile"></div>
@@ -66,14 +70,14 @@ export default {
   components: { CroppingModal, IconChecked },
   props: ['file', 'backendCreate'],
   emits: ['delete-file', 'select-file'],
-  created() {
-    this.file.uploading = false;
-    this.file.uploadingProgress = 0;
-  },
   data() {
     return {
       isDeleting: false,
     };
+  },
+  created() {
+    this.file.uploading = false;
+    this.file.uploadingProgress = 0;
   },
   computed: {
     fileExtenson() {
@@ -120,6 +124,13 @@ export default {
     });
   },
   methods: {
+    onDragStart(event) {
+      if (this.file.uploading === true) {
+        event.preventDefault();
+        return;
+      }
+      event.dataTransfer.setData('text/plain', JSON.stringify(this.file));
+    },
     async handleDeleteFile() {
       // await new Promise((r) => setTimeout(r, 300));
       this.isDeleting = true;
@@ -167,6 +178,9 @@ export default {
   cursor: inherit;
   /*overflow: hidden;*/
   transition: 0.3s ease;
+}
+.file:active {
+  /*transform: scale(0);*/
 }
 .file-block {
   border-radius: 4px;

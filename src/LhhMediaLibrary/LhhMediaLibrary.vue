@@ -68,7 +68,6 @@
         class="lhh-media-library-content-item"
         v-for="file of shownFiles"
         :key="file"
-        draggable="true"
       >
         <File
           :file="file"
@@ -231,19 +230,30 @@ export default {
     },
   },
   methods: {
-    allowDrop(e) {
-      e.preventDefault();
-      this.isDragOver = true;
+    allowDrop(event) {
+      event.preventDefault();
+      if (
+        event.dataTransfer.items[0] &&
+        event.dataTransfer.items[0].kind === 'file'
+      ) {
+        this.isDragOver = true;
+      }
     },
     onDragLeave() {
       this.isDragOver = false;
     },
     handleDrop(event) {
       event.preventDefault();
-      this.addFiles(event.dataTransfer.files);
+      if (event.dataTransfer.files.length > 0) {
+        this.addFiles(event.dataTransfer.files);
+        this.scrollIntoContentEnd();
+      } else {
+        console.log('handleDrop not files !!');
+        console.log(event.dataTransfer.items[0]);
+        console.log(event.dataTransfer.getData('text'));
+      }
       // const target = event.currentTarget;
       this.isDragOver = false;
-      this.scrollIntoContentEnd();
     },
     openFolder(folder) {
       this.currentOpenedFolder = folder;
