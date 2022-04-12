@@ -74,7 +74,6 @@ export default {
 
       this.isLoading = false;
 
-      return;
       this.cropperInstance = new Cropper(image, {
         checkCrossOrigin: false,
         // aspectRatio: 16 / 9,
