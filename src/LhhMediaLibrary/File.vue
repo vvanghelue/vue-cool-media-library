@@ -69,7 +69,7 @@ import IconChecked from './assets/IconChecked.vue';
 export default {
   components: { CroppingModal, IconChecked },
   props: ['file', 'backendCreate'],
-  emits: ['delete-file', 'select-file'],
+  emits: ['delete-file', 'select-file', 'start-dragging'],
   data() {
     return {
       isDeleting: false,
@@ -129,7 +129,7 @@ export default {
         event.preventDefault();
         return;
       }
-      event.dataTransfer.setData('text/plain', JSON.stringify(this.file));
+      this.$emit('start-dragging');
     },
     async handleDeleteFile() {
       // await new Promise((r) => setTimeout(r, 300));

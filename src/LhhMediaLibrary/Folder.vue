@@ -59,7 +59,7 @@ import IconFolder from './assets/IconFolder.vue';
 export default {
   props: ['folder'],
   components: { IconFolder },
-  emits: ['open-folder', 'delete-folder'],
+  emits: ['open-folder', 'delete-folder', 'file-dropped'],
   data() {
     return {
       animateOpenFolder: false,
@@ -69,19 +69,18 @@ export default {
   },
   methods: {
     onDragOver(event) {
-      event.preventDefault();
-      if (
-        event.dataTransfer.items[0] &&
-        event.dataTransfer.items[0].kind === 'string'
-      ) {
-        this.isDragOver = true;
-      }
+      this.isDragOver = true;
     },
     onDragLeave() {
       this.isDragOver = false;
     },
-    onDrop() {
+    onDrop(event) {
       this.isDragOver = false;
+      // if is not an input file we consider it is an file already
+      // uploaded file from the library
+      if (event.dataTransfer.files.length === 0) {
+        this.$emit('file-dropped');
+      }
     },
     async handleFolderClick(event) {
       if (event.target.classList.contains('folder-name')) {

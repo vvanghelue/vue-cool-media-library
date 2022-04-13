@@ -62,6 +62,7 @@
           @open-folder="openFolder"
           @delete-folder="onDeleteFolder"
           :ref="index === shownFolders.length - 1 ? 'folder-last' : 'none'"
+          @file-dropped="() => onFileDroppedOnFolder(folder)"
         />
       </div>
       <div
@@ -74,6 +75,7 @@
           :backendCreate="backendCreate"
           @delete-file="onDeleteFile"
           @select-file="onSelectFile"
+          @start-dragging="currentFileDragging = file"
         />
       </div>
     </div>
@@ -179,6 +181,7 @@ export default {
       isDragOver: false,
       rootFolder,
       currentOpenedFolder: rootFolder,
+      currentFileDragging: null,
     };
   },
   watch: {
@@ -230,6 +233,13 @@ export default {
     },
   },
   methods: {
+    onFileDroppedOnFolder(folder) {
+      this.currentOpenedFolder.children =
+        this.currentOpenedFolder.children.filter(
+          (i) => i !== this.currentFileDragging
+        );
+      folder.children.push(this.currentFileDragging);
+    },
     allowDrop(event) {
       event.preventDefault();
       if (
