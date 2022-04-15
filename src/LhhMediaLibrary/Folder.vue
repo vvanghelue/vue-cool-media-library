@@ -77,8 +77,8 @@ export default {
     },
     onDrop(event) {
       this.isDragOver = false;
-      // if is not an input file we consider it is an file already
-      // uploaded file from the library
+      // if is not a drag and drop from the filesystem containing input files
+      // we consider it is an already uploaded file from the library
       if (event.dataTransfer.files.length === 0) {
         this.$emit('file-dropped');
       }
