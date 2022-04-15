@@ -7,6 +7,7 @@
     ]"
     @click="handleFolderClick"
     :droppable="true"
+    :draggable="true"
     @dragover="onDragOver"
     @dragleave="onDragLeave"
     @drop="onDrop"
